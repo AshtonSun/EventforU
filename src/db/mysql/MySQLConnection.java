@@ -196,7 +196,7 @@ public class MySQLConnection implements DBConnection {
 			statement.execute();
 
 			// Second, update categories table for each category.
-			sql = "INSERT IGNORE INTO categories VALUES (?,?)";
+			sql = "INSERT IGNORE INTO categories VALUES (?,?)";// prevent duplicate
 			for (String category : item.getCategories()) {
 				statement = conn.prepareStatement(sql);
 				statement.setString(1, item.getItemId());
@@ -214,7 +214,7 @@ public class MySQLConnection implements DBConnection {
 		ExternalAPI api = ExternalAPIFactory.getExternalAPI(); // moved here
 		List<Item> items = api.search(lat, lon, term);
 		for (Item item : items) {
-			// Save the item into our own db
+			// Save the item into our own db.
 			saveItem(item);
 		}
 		return items;
